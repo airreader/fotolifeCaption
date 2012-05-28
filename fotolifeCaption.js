@@ -1,18 +1,14 @@
-Hatena.Star.SiteConfig = {
-	entryNodes: {
-    		'span.fotoStar': {
+Hatena.Star.SiteConfig.entryNodes['span.fotoStar']  = {
      			uri: 'span.fotoCaption a',
       			title: 'span.fotoCaption',
       			container: 'span.fotoCaption'
-    		}
-  	}
 };
 
 $(function(){
     $.getScript("http://dl.dropbox.com/u/673184/caius-jquery-captify-242e714/captify2.js", function(){
         $('img').each(function(){
             var fotoAlt = $(this).attr('alt');
-            if (/f:id/.test(fotoAlt) == true){ 
+            if (/f:id/.test(fotoAlt)){ 
                 var title = $(this).next('span.capt').text();
                 if (title == ""){
                        title = "この画像にスターをつける";
@@ -25,7 +21,16 @@ $(function(){
                 $(this).addClass('captify');
                 $(this).attr({'rel':fotoNum});
 
-                $(this).append('<div id="'+fotoNum+'"><span class="fotoStar"><span class="fotoCaption"><a href="'+fotoUrl+'"><span  style="color: #fff">'+title+'</span></a></span></span></div>');
+                
+                $(this).parent().append($('<span>').attr({'id':fotoNum})
+                       .append($('<span>').addClass('fotoStar')
+                       .append($('<span>').addClass('fotoCaption')
+                       .append($('<a>').attr({'href':fotoUrl}).css({'color':'#fff'}).text(title)))));
+
+                window.hoge = $('figcantion.caption-bottom');
+                window.huga = $(this).next();
+
+                //$(this).append('<span id="'+fotoNum+'"><span class="fotoStar"><span class="fotoCaption"><a href="'+fotoUrl+'"><span  style="color: #fff">'+title+'</span></a></span></span></div>');
                 $('img.captify').captify({
                     // all of these options are... optional
                     // ---
